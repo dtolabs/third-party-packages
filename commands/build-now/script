@@ -62,7 +62,6 @@ rerun_options_parse "$@"
 # - - -
 # Put the command implementation here.
 # - - -
-
 # Run through the list of third-party packages and clone them into RERUN_MODULES in order to be able to run their build jobs.
 for PACKAGE_REPOSITORY in $(list-third-party-package-repositories)
 do

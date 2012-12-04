@@ -3,4 +3,4 @@
 # Thu Nov 15 01:20:33 PST 2012
 NAME=cleanup
 DESCRIPTION="Cleanup Jenkins working files"
-OPTIONS=
+OPTIONS=""

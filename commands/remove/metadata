@@ -3,4 +3,4 @@
 # Tue Nov 13 15:50:52 PST 2012
 NAME=remove
 DESCRIPTION="Stop and completely remove the Jenkins instance"
-OPTIONS=
+OPTIONS=""
