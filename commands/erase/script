@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-#/ command: third-party-packages:erase: "Erase the third-party builds' packages"
+#/ command: third-party-packages:erase: "Erase the Jenkins instance's packages"
 #
 #/ usage: rerun third-party-packages:erase [options]
 #

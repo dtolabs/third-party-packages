@@ -1,5 +1,5 @@
 # 
-# Shell functions for third-party builds commands
+# Shell functions for third-party packaging commands
 #
 
 

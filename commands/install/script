@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-#/ command: third-party-packages:install: "Install and start the third-party builds"
+#/ command: third-party-packages:install: "Install and start the Jenkins instance"
 #
 #/ usage: rerun third-party-packages:install 
 #

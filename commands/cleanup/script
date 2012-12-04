@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-#/ command: third-party-packages:cleanup: "Cleanup the third-party builds' working files"
+#/ command: third-party-packages:cleanup: "Cleanup Jenkins working files"
 #
 #/ usage: rerun third-party-packages:cleanup [options]
 #

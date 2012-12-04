@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-#/ command: third-party-packages:configure: "Configure the third-party builds"
+#/ command: third-party-packages:configure: "Configure the Jenkins instance"
 #
 #/ usage: rerun third-party-packages:configure [options]
 #
