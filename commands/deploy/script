@@ -43,6 +43,12 @@ rerun third-party-packages:start
 # Configure the build console:
 rerun third-party-packages:configure
 
+# Create the build jobs for all the third-party packages:
+rerun third-party-packages:create-jobs
+
+# Kick off an initial build of all the third-party packages:
+rerun third-party-packages:build-now
+
 exit $?
 
 # Done

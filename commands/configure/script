@@ -39,7 +39,6 @@ rerun jenkins:install-plugin --plugin-name github
 # Make sure the Jenkins user can access GitHub over ssh:
 sudo -u jenkins rerun ssh:add-host-key --type rsa --hostname github.com
 
-
 # Restart Jenkins to enable the configuration.
 rerun jenkins:restart
 
