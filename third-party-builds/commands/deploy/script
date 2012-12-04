@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+#
+#/ command: third-party-builds:deploy: "Deploy the third-party builds"
+#
+#/ usage: rerun third-party-builds:deploy [options]
+#
+#/ rerun env variables: RERUN, RERUN_VERSION, RERUN_MODULES, RERUN_MODULE_DIR
+#/ option variables: 
+
+# Read module function library.
+. $RERUN_MODULE_DIR/lib/functions.sh || { 
+  echo >&2 "Failed loading function library." ; exit 1 ; 
+}
+
+# Error handling
+# ---------------
+# * Trap calls `rerun_die` with standard message.
+# * Exit upon command errors or accessing unset variables.
+#   * See [set](http://ss64.com/bash/set.html)
+trap 'rerun_die "*** command failed: third-party-builds:deploy. ***"' ERR
+set -o nounset -o pipefail
+
+# Parse the command options.
+[[ -r $RERUN_MODULE_DIR/commands/deploy/options.sh ]] && {
+    . $RERUN_MODULE_DIR/commands/deploy/options.sh || rerun_die "Failed loading options parser."
+    rerun_options_parse "$@"
+}
+
+
+# ------------------------------
+# Your implementation goes here.
+# ------------------------------
+
+# Make sure the build console is down:
+rerun third-party-builds:stop
+
+# Install the build console's packages:
+rerun third-party-builds:install
+
+# Start the build console:
+rerun third-party-builds:start
+
+# Configure the build console:
+rerun third-party-builds:configure
+
+# Run the build jobs:
+rerun third-party-builds:build-now
+
+exit $?
+
+# Done
