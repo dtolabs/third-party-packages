@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
-#/ command: third-party-builds:deploy: "Deploy the third-party builds"
+#/ command: third-party-packages:deploy: "Deploy the third-party builds"
 #
-#/ usage: rerun third-party-builds:deploy [options]
+#/ usage: rerun third-party-packages:deploy [options]
 #
 #/ rerun env variables: RERUN, RERUN_VERSION, RERUN_MODULES, RERUN_MODULE_DIR
 #/ option variables: 
@@ -17,7 +17,7 @@
 # * Trap calls `rerun_die` with standard message.
 # * Exit upon command errors or accessing unset variables.
 #   * See [set](http://ss64.com/bash/set.html)
-trap 'rerun_die "*** command failed: third-party-builds:deploy. ***"' ERR
+trap 'rerun_die "*** command failed: third-party-packages:deploy. ***"' ERR
 set -o nounset -o pipefail
 
 # Parse the command options.
@@ -32,19 +32,16 @@ set -o nounset -o pipefail
 # ------------------------------
 
 # Make sure the build console is down:
-rerun third-party-builds:stop
+rerun third-party-packages:stop
 
 # Install the build console's packages:
-rerun third-party-builds:install
+rerun third-party-packages:install
 
 # Start the build console:
-rerun third-party-builds:start
+rerun third-party-packages:start
 
 # Configure the build console:
-rerun third-party-builds:configure
-
-# Run the build jobs:
-rerun third-party-builds:build-now
+rerun third-party-packages:configure
 
 exit $?
 
