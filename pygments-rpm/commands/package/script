@@ -63,7 +63,7 @@ rerun_options_parse "$@"
 # Put the command implementation here.
 # - - -
 
-rerun python-setuptools:build --version ${VERSION} --directory ${RERUN_MODULE_DIR} --name Pygments
+rerun python-setuptools:build --version ${VERSION} --release ${RELEASE} --directory ${RERUN_MODULE_DIR} --name Pygments
 
 # Done. Exit with last command exit status.
 exit $?
