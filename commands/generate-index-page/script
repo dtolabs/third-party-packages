@@ -9,15 +9,15 @@
 # The `command` and `usage` comments describe the command
 # and show its options.
 # 
-#/ command: third-party-packages:configure: "Configure the Jenkins instance"
-#/ usage: rerun third-party-packages:configure 
+#/ command: third-party-packages:generate-index-page: "Generate the index page for the GitHub pages site"
+#/ usage: rerun third-party-packages:generate-index-page [options]
 
 # Load common functions
 # ---------------------
 
 # Load the function library for this module.
 # This loads rerun functions, too.
-. $RERUN_MODULE_DIR/lib/functions.sh configure || { 
+. $RERUN_MODULE_DIR/lib/functions.sh generate-index-page || { 
   echo >&2 "Failed loading function library." ; exit 1 ; 
 }
 
@@ -29,7 +29,7 @@
 # Trap errors and exit. The call to `rerun_die` will print the
 # the error message and exit with the error command exit status. 
 
-trap 'rerun_die $? "*** command failed: third-party-packages:configure. ***"' ERR
+trap 'rerun_die $? "*** command failed: third-party-packages:generate-index-page. ***"' ERR
 
 # Run [set] `nounset` to treat unset variables as errors. Set [pipefail]
 # so a pipeline return status is the value of the last 
@@ -63,17 +63,39 @@ rerun_options_parse "$@"
 # Put the command implementation here.
 # - - -
 
-# Install the plug-ins required by the example builds.
-rerun jenkins:install-plugin --plugin-name git
-rerun jenkins:install-plugin --plugin-name github-api
-rerun jenkins:install-plugin --plugin-name github
+compose-index-page() {
+  cat $RERUN_MODULE_DIR/templates/header.md
 
-# Make sure the Jenkins user can access GitHub over ssh:
-sudo -u jenkins rerun ssh:add-host-key --type rsa --hostname github.com
+  for PACKAGE_REPOSITORY in $(list-third-party-package-repositories)
+  do
+    PACKAGE_REPOSITORY_OWNER=$(get-third-party-package-repository-owner ${PACKAGE_REPOSITORY})
+    PACKAGE_REPOSITORY_NAME=$(get-third-party-package-repository-name ${PACKAGE_REPOSITORY})
 
-# Restart Jenkins to enable the configuration.
-rerun jenkins:restart
+    echo "* [${PACKAGE_REPOSITORY_OWNER}](https://github.com/${PACKAGE_REPOSITORY_OWNER})/[${PACKAGE_REPOSITORY_NAME}](https://github.com/${PACKAGE_REPOSITORY_OWNER}/${PACKAGE_REPOSITORY_NAME})"
+  done
 
+  cat $RERUN_MODULE_DIR/templates/footer.md
+}
+
+TMPDIR=$(mktemp -d)
+
+git clone -q --branch gh-pages git@github.com:dtolabs/third-party-packages.git ${TMPDIR}
+
+pushd  ${TMPDIR} >/dev/null
+
+compose-index-page | mkd2html -css docs.css > index.html
+
+if ! git diff --exit-code --quiet index.html
+then
+  git add index.html
+  git commit -q --message="Automatic update of index page from $USER@$HOSTNAME"
+  git push -q
+fi
+
+popd >/dev/null
+
+rm -rf ${TMPDIR}
+
+# Done. Exit with last command exit status.
 exit $?
 
-# Done
