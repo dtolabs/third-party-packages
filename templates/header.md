@@ -1,7 +1,5 @@
-DTO Lab's third-party software
+DTO Lab's third-party packages
 ==============================
 
-This site makes DTO Lab's RPM packaging of useful third-party software available as a Yum repository.
-
-Included packages have been built from this set of GitHub repositories:
+This site makes DTO Lab's packaging of useful third-party software available for installation.
 

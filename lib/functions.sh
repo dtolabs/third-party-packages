@@ -29,15 +29,36 @@ export LC_ALL=C
 
 # Set of helper functions to manage access to the file specifying the set of packages to be managed.
 list-third-party-package-repositories() {
-  grep -v "^#" $RERUN_MODULE_DIR/etc/packages
+  [[ $# -ne 1 ]] && rerun_die "usage: \"list-third-party-package-repositories format\""
+  grep -v "^#" $RERUN_MODULE_DIR/etc/packages | grep ":$1:" | cut -d: -f1
 }
 
 get-third-party-package-repository-owner() {
   [[ $# -ne 1 ]] && rerun_die "usage: \"get-third-party-repository-owner repository\""
-  echo "$1" | cut -d/ -f1
+  echo "$1" | cut -d: -f1 | cut -d/ -f1
 }
 
 get-third-party-package-repository-name() {
   [[ $# -ne 1 ]] && rerun_die "usage: \"get-third-party-package-repository-name repository\""
-  echo "$1" | cut -d/ -f2
+  echo "$1" | cut -d: -f1 | cut -d/ -f2
+}
+
+get-third-party-package-name() {
+  [[ $# -ne 1 ]] && rerun_die "usage: \"get-third-party-package-name repository\""
+  grep "^$1:" $RERUN_MODULE_DIR/etc/packages | cut -d: -f2
+}
+
+get-third-party-package-format() {
+  [[ $# -ne 1 ]] && rerun_die "usage: \"get-third-party-package-format repository\""
+  grep "^$1:" $RERUN_MODULE_DIR/etc/packages | cut -d: -f3
+}
+
+get-third-party-package-distributions() {
+  [[ $# -ne 1 ]] && rerun_die "usage: \"get-third-party-package-distributions repository\""
+  grep "^$1:" $RERUN_MODULE_DIR/etc/packages | cut -d: -f4
+}
+
+get-third-party-package-architectures() {
+  [[ $# -ne 1 ]] && rerun_die "usage: \"get-third-party-package-architectures repository\""
+  grep "^$1:" $RERUN_MODULE_DIR/etc/packages | cut -d: -f5
 }
